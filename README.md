@@ -51,6 +51,9 @@ An event looks like the following. Here the event consists of just 2 tweets, one
 You can use the following command to evaluat your rumour detection results, which takes two input files: the ground truth and your predictions
 
     python eval.py --predictions dev.baseline.json --groundtruth dev.label.json
+    
+## Source
+University of Melbourne COMP90042 Subject.
 
 # Explanation of My Implementation and Result
 
@@ -71,7 +74,7 @@ When it comes to feature, training only source tweets or reply tweets which will
 
 In terms of data processing, firstly, @username is deleted because it only indicates whom to reply to and has no meaning to the tweet. Secondly, an URL may be a factor in spreading rumor, but the URL itself does not have any context. Therefore, it may affect the contextual representation of other words. Finally, a hashtag is finally deleted because it may not be necessary to the source and reply tweet. Although hashtags may be indicators to distinguish whether it is a rumor, hashtags have no context for tweet content. However, because a hashtag may be a single word, it may have a meaning. As a result, hashtags will be the final text to be removed.
 
-## Results discussion and conclusion
+## Results Discussion and Conclusion
 In this section, the F1 score will be used. The result is as the following table. The discussion will be conducted in two aspects with the hypotheses, namely development and testing results. Finally, we conclude the hypotheses by finding similarities between these two results. In the following discussion, 1, 2, 3, a, b, c, and d refer to Table in Feature Selection and Processing Section.
 
 | | Dev F1 | Testing F1 |
@@ -82,7 +85,7 @@ In this section, the F1 score will be used. The result is as the following table
 | 2-a | 0.8242 | 0.8242 |
 | 2-b | 0.8144 | 0.8197 |
 | 2-c | 0.8287 | 0.836 |
-| 2-d | **0.8309** | 0.8444 |
+| 2-d | **0.8309** | **0.8444** |
 | 3-a | 0.8269 | 0.8023 |
 | 3-b | 0.8247 | 0.7778 |
 | 3-c | 0.8 | 0.809 |
@@ -91,3 +94,17 @@ In this section, the F1 score will be used. The result is as the following table
 | 4-b | 0.8293 | 0.7853 |
 | 4-c | 0.8154 | 0.8043 |
 | 4-d | **0.8534** | 0.8 |
+
+From development results, some hypotheses can be justified. Firstly, the highest F1 score in each feature 2 to 4 uses the d processing method. This proves that @username, URL, and hashtag are not useful for classification, as mentioned in the previous section. Additionally, training the sequence of replies can increase the F1 score, although the increase is not significant. Finally, the results show that getting the later reply tweets increases prediction performance since 4-d has the best F1 score
+
+In terms of testing results, the conclusion is somewhat different above. The first point is that the reply tweets sequence does not increase the performance. Secondly, d processing is not necessarily the best in features 2 to 4. Eventually, training later reply tweets does not increase the performance. The reason for this is that not every later reply tweet has a refuting rumor content. Therefore, there is a certain "luck" factor in getting the last 10 replies. That is why 4-d in development and testing results will have a considerable gap.
+
+However, although there are some differences between development and testing results, some similarities can be found to infer that certain hypotheses are correct. Firstly, the results of training sources with reply tweets are generally better than training sources only. Secondly, the best results in development and testing are performing d processing, namely 4-d in development and 2-d in testing. Therefore, d processing is still effective.
+
+To conclude, training sources with reply tweets without considering the time sequence, and removing @username, URL, and hashtag is the best choice because it has the most stable performance in dev and testing.
+
+## References
+Qiao, Y., Xiong, C., Liu, Z., & Liu, Z. (2019).
+    Understanding the Behaviors of BERT in
+    Ranking. arXiv preprint arXiv:1904.07531.
+
