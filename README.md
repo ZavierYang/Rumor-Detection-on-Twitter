@@ -46,11 +46,6 @@ An event looks like the following. Here the event consists of just 2 tweets, one
         ...
         }
     ]
-
-## Evaluation Script
-You can use the following command to evaluat your rumour detection results, which takes two input files: the ground truth and your predictions
-
-    python eval.py --predictions dev.baseline.json --groundtruth dev.label.json
     
 ## Source
 University of Melbourne COMP90042 Subject.
